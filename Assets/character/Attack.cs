@@ -12,22 +12,26 @@ public class Attack : MonoBehaviour
     public KeyCode poisonKey = KeyCode.E; // Key for poison attack
     public KeyCode knockDownKey = KeyCode.F; // Key for knock-down attack
 
+    // Position offset for attack area
+    public Vector2 attackOffset = new Vector2(1f, 0f);
+
     void Update()
     {
-            if (Input.GetKeyDown(knockDownKey))
-            {
-                PerformKnockDownAttack();
-            }
-            else if (Input.GetKeyDown(poisonKey))
-            {
-                PerformPoisonAttack();
-            }
+        if (Input.GetKeyDown(knockDownKey))
+        {
+            PerformKnockDownAttack();
+        }
+        else if (Input.GetKeyDown(poisonKey))
+        {
+            PerformPoisonAttack();
+        }
     }
 
     void PerformKnockDownAttack()
     {
-        Debug.Log("knockdown");
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position + transform.right * attackRange, 0.5f, enemyLayers);
+        Debug.Log("Knockdown attack!");
+        Vector2 attackPosition = (Vector2)transform.position + attackOffset;
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPosition, attackRange, enemyLayers);
 
         foreach (Collider2D enemy in hitEnemies)
         {
@@ -42,8 +46,9 @@ public class Attack : MonoBehaviour
 
     void PerformPoisonAttack()
     {
-        Debug.Log("posion");
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position + transform.right * attackRange, 0.5f, enemyLayers);
+        Debug.Log("Poison attack!");
+        Vector2 attackPosition = (Vector2)transform.position + attackOffset;
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPosition, attackRange, enemyLayers);
 
         foreach (Collider2D enemy in hitEnemies)
         {
