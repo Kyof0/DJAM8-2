@@ -4,8 +4,8 @@ public class EnemyHealth : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth;
-    private bool isKnockedDown = false;
-    private bool isPoisoned = false;
+    public bool isKnockedDown = false;
+    public bool isPoisoned = false;
     public float knockDownDuration = 2f;
     public float poisonDuration = 5f;
     private Rigidbody2D rb;
@@ -36,10 +36,12 @@ public class EnemyHealth : MonoBehaviour
     private IEnumerator KnockDown(Vector2 direction)
     {
         isKnockedDown = true;
-        rb.AddForce(direction * knockBackForce, ForceMode2D.Impulse);
         yield return new WaitForSeconds(knockDownDuration);
 
-        isKnockedDown = false;
+        if(!isPoisoned)
+        {
+            isKnockedDown = false;
+        }
 
     }
 
@@ -67,7 +69,7 @@ public class EnemyHealth : MonoBehaviour
             }
             yield return new WaitForSeconds(1.0f);
         }
-
+        isKnockedDown = false;
         isPoisoned = false;
     }
 
