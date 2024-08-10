@@ -1,7 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 public class Health : MonoBehaviour
 {
     public int maxHealth = 10;
@@ -12,6 +12,13 @@ public class Health : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+        sr = GetComponent<SpriteRenderer>();
+    }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Y)) {
+            TakeDamage(20);
+        }
     }
 
     public void TakeDamage(int damage)

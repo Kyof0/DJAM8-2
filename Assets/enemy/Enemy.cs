@@ -8,15 +8,18 @@ public class Enemy : MonoBehaviour
 {
     public EnemyHealth enemyHealth;
 
-    public int damage = 5;
+    public int damage = 1;
     public float attackCooldown = 1.2f;
     public bool attackReady = true;
     public int AttackDuration;
     public int IdleDuration;
     public bool isAble = true;
     public bool isAttacking = false;
-    public GameObject target;
+    public GameObject targetGO;
+    public Transform gO;
     public int speed = 5;
+
+    public float distance;
 
     public LayerMask enemyLayers;
     public float attackRange = 1.5f;
@@ -29,10 +32,20 @@ public class Enemy : MonoBehaviour
     void Start() {
         currentState = EnemyState.Idle;
         enemyHealth = GetComponent<EnemyHealth>();
+        gO = GetComponent<Transform>();
     }
 
     // Update is called once per frame
     void Update() {
+        distance = Vector2.Distance(targetGO.transform.position, gO.position);
+        if (Mathf.Abs(distance) < 1.5f){
+            isAttacking = true;
+        }
+        else
+        {
+            isAttacking = false;
+        }
+        Debug.Log($"{Vector2.Distance(targetGO.transform.position, gO.position)}");
         if (!enemyHealth.isKnocked()) {
             HandleState(currentState);
         }
@@ -56,23 +69,18 @@ public class Enemy : MonoBehaviour
     }
     public void Attacking() {
         if (!isAttacking) {
-            transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, targetGO.transform.position, speed * Time.deltaTime);
         }
-
-        Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(transform.position + transform.right * attackRange, 0.5f, enemyLayers);
+        Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(transform.position , 1f, enemyLayers);
         foreach (Collider2D player in hitPlayer) {
             Health hp = player.GetComponent<Health>();
             if (hp != null)
             {
-                isAttacking = true;
                 if (attackReady) {
                     attackReady = false;
                     hp.TakeDamage(damage);
+                    StartCoroutine(AttackCooldown(attackCooldown));
                 }
-                StartCoroutine(AttackCooldown(attackCooldown));
-            }
-            else {
-                isAttacking = false;
             }
         }
         if (isAble) {
@@ -82,6 +90,7 @@ public class Enemy : MonoBehaviour
     }
     public IEnumerator AttackCooldown(float delay)
     {
+        Debug.Log("Attacking");
         yield return new WaitForSeconds(delay);
         attackReady = true;
     }

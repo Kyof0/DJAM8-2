@@ -13,6 +13,7 @@ public class EnemyHealth : MonoBehaviour
     public Attack attack;
 
 
+
     public bool isKnocked() {
         return isKnockedDown;
     }
@@ -50,23 +51,23 @@ public class EnemyHealth : MonoBehaviour
 
     }
 
-    public void ApplyPoison()
+    public void ApplyPoison(int poisonDamage)
     {
         if (!isKnockedDown || isPoisoned)
             return;
 
         isPoisoned = true;
 
-        StartCoroutine(PoisonEffect());
+        StartCoroutine(PoisonEffect(poisonDamage));
     }
 
-    private IEnumerator PoisonEffect()
+    private IEnumerator PoisonEffect(int poisonDamage)
     {
         float poisonEndTime = Time.time + poisonDuration;
 
         while (Time.time < poisonEndTime)
         {
-            currentHealth -= attack.PoisonDamage;
+            currentHealth -= poisonDamage;
             if (currentHealth <= 0)
             {
                 Die();

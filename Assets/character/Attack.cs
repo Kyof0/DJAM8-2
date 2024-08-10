@@ -50,7 +50,7 @@ public class Attack : MonoBehaviour
             EnemyHealth enemyScript = enemy.GetComponent<EnemyHealth>();
             if (enemyScript != null)
             {
-                enemyScript.ApplyPoison();
+                enemyScript.ApplyPoison(PoisonDamage);
             }
         }
     }
