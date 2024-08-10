@@ -10,7 +10,6 @@ public class EnemyHealth : MonoBehaviour
     public float poisonDuration = 5f;
     private Rigidbody2D rb;
     public float knockBackForce = 5f;
-    public VulnerablePoint vulnerablePoint;
 
     void Start()
     {
@@ -28,7 +27,7 @@ public class EnemyHealth : MonoBehaviour
         {
             Die();
         }
-        else if (vulnerablePoint.IsVisible())
+        else
         {
             StartCoroutine(KnockDown(knockBackDirection));
         }
@@ -38,8 +37,6 @@ public class EnemyHealth : MonoBehaviour
     {
         isKnockedDown = true;
         rb.AddForce(direction * knockBackForce, ForceMode2D.Impulse);
-
-
         yield return new WaitForSeconds(knockDownDuration);
 
         isKnockedDown = false;

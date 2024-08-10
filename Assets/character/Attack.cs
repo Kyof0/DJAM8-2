@@ -14,8 +14,6 @@ public class Attack : MonoBehaviour
 
     void Update()
     {
-        if (Time.time >= lastAttackTime + attackCooldown)
-        {
             if (Input.GetKeyDown(knockDownKey))
             {
                 PerformKnockDownAttack();
@@ -25,18 +23,18 @@ public class Attack : MonoBehaviour
                 PerformPoisonAttack();
             }
 
-            lastAttackTime = Time.time;
-        }
+        
     }
 
     void PerformKnockDownAttack()
     {
+        Debug.Log("knockdown");
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position + transform.right * attackRange, 0.5f, enemyLayers);
 
         foreach (Collider2D enemy in hitEnemies)
         {
             EnemyHealth enemyScript = enemy.GetComponent<EnemyHealth>();
-            if (enemyScript != null && enemyScript.vulnerablePoint.IsVisible())
+            if (enemyScript != null)
             {
                 Vector2 knockBackDirection = (enemy.transform.position - transform.position).normalized;
                 enemyScript.TakeDamage(attackDamage, knockBackDirection * knockBackForce);
@@ -46,6 +44,7 @@ public class Attack : MonoBehaviour
 
     void PerformPoisonAttack()
     {
+        Debug.Log("posion");
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position + transform.right * attackRange, 0.5f, enemyLayers);
 
         foreach (Collider2D enemy in hitEnemies)
