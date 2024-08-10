@@ -22,8 +22,6 @@ public class Attack : MonoBehaviour
             {
                 PerformPoisonAttack();
             }
-
-        
     }
 
     void PerformKnockDownAttack()

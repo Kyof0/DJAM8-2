@@ -12,6 +12,10 @@ public class EnemyHealth : MonoBehaviour
     public float knockBackForce = 5f;
     public int PoisonDamage = 10;
 
+
+    public bool isKnocked() {
+        return isKnockedDown;
+    }
     void Start()
     {
         currentHealth = maxHealth;
