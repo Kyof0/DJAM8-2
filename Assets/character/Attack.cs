@@ -8,7 +8,7 @@ public class Attack : MonoBehaviour
     public LayerMask enemyLayers;
     public float knockBackForce = 5f;
     private float lastAttackTime;
-
+    public int PoisonDamage = 10;
     public KeyCode poisonKey = KeyCode.E; // Key for poison attack
     public KeyCode knockDownKey = KeyCode.F; // Key for knock-down attack
 

@@ -10,7 +10,7 @@ public class EnemyHealth : MonoBehaviour
     public float poisonDuration = 5f;
     private Rigidbody2D rb;
     public float knockBackForce = 5f;
-    public int PoisonDamage = 10;
+    public Attack attack;
 
 
     public bool isKnocked() {
@@ -66,7 +66,7 @@ public class EnemyHealth : MonoBehaviour
 
         while (Time.time < poisonEndTime)
         {
-            currentHealth -= PoisonDamage;
+            currentHealth -= attack.PoisonDamage;
             if (currentHealth <= 0)
             {
                 Die();
