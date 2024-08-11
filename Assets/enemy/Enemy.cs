@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -124,6 +124,7 @@ public class Enemy : MonoBehaviour
                     {
                         StartCoroutine(VulnerableDuration(2f));
                     }
+                    AudioManager.Instance.PlaySFX("brush");
                     anim.SetTrigger("Attacking");
                     attackReady = false;
                     hp.TakeDamage(damage);

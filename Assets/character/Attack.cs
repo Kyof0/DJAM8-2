@@ -87,6 +87,7 @@ public class Attack : MonoBehaviour
                     {
                         SpendStamina(5f);
                         Stamina -= 5f;
+                        AudioManager.Instance.PlaySFX("tooth");
                         StartCoroutine(changeSprite(0.5f));
                         Vector2 knockBackDirection = (enemy.transform.position - transform.position).normalized;
                         enemyScript.TakeDamage(attackDamage, knockBackDirection * knockBackForce);

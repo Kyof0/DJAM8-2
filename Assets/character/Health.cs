@@ -50,6 +50,7 @@ public class Health : MonoBehaviour
 
     void Die()
     {
+        AudioManager.Instance.PlaySFX("lose");
         Debug.Log("Main character has died.");
         SceneManager.LoadScene("entrance");
     }

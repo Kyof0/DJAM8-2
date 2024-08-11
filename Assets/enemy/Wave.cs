@@ -15,8 +15,13 @@ public class EnemyManager : MonoBehaviour
             SpawnEnemies();
             wavesSpawned++; // Increment the wave counter
         }
-    }
+        if(wavesSpawned > maxWaves)
+        {
+            AudioManager.Instance.PlaySFX("win");
 
+        }
+    }
+    
     private bool IsOnlyOneEnemyLeft()
     {
         // Find all objects of type Enemy in the scene, including inactive ones

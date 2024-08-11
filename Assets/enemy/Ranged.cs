@@ -125,7 +125,7 @@ public class RangedEnemy : MonoBehaviour
             EnemyHealth allyHealth = ally.GetComponent<EnemyHealth>();
             if (allyHealth != null && allyHealth.currentHealth < allyHealth.maxHealth)
             {
-
+                AudioManager.Instance.PlaySFX("hpregen");
                 gameObject.transform.GetChild(0).gameObject.SetActive(true);
                 Debug.Log("heal complete");
                 allyHealth.currentHealth += healAmount;
@@ -152,6 +152,7 @@ public class RangedEnemy : MonoBehaviour
     private IEnumerator animationtilshoot()
     {
         yield return new WaitForSeconds(0.8f);
+        AudioManager.Instance.PlaySFX("bossgunshot");
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
         Projectile projScript = projectile.GetComponent<Projectile>();
         if (projScript != null)
