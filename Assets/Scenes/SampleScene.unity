@@ -5588,6 +5588,10 @@ PrefabInstance:
       value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 7295584982209089720, guid: 17e0f68ae2f619d41b1628ceb2d8c22c, type: 3}
+      propertyPath: poisonDuration
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7295584982209089720, guid: 17e0f68ae2f619d41b1628ceb2d8c22c, type: 3}
       propertyPath: vulnerablePoint
       value: 
       objectReference: {fileID: 1021477416}
