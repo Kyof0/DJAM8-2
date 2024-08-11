@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -17128,6 +17127,11 @@ Transform:
   - {fileID: 1334678366}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &631382010 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6195438596893470156, guid: c3ee3064f9a075c41bb722ae97c58823, type: 3}
+  m_PrefabInstance: {fileID: 8881031833760331442}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &870467348
 GameObject:
   m_ObjectHideFlags: 0
@@ -18373,8 +18377,12 @@ PrefabInstance:
       objectReference: {fileID: 1560061833}
     - target: {fileID: 5474116576694602951, guid: c3ee3064f9a075c41bb722ae97c58823, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5474116576694602951, guid: c3ee3064f9a075c41bb722ae97c58823, type: 3}
+      propertyPath: Volunerarpoint
+      value: 
+      objectReference: {fileID: 631382010}
     - target: {fileID: 6195438596893470156, guid: c3ee3064f9a075c41bb722ae97c58823, type: 3}
       propertyPath: m_Name
       value: dentistOne
