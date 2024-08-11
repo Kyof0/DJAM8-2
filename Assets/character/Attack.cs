@@ -25,12 +25,14 @@ public class Attack : MonoBehaviour
     public float dashCooldown = 2f;
     public bool canDash = true;
     public KeyCode dashKey = KeyCode.Space; // Key for dashing
-
+    public barManager barManager;
+    public GameObject barManagerGO;
     // Position offset for attack area
     public Vector2 attackOffset = new Vector2(1f, 0f);
 
     void Start()
     {
+        barManager = barManagerGO.GetComponent<barManager>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -52,6 +54,15 @@ public class Attack : MonoBehaviour
 
         Stamina += 0.01f;
         Stamina = Mathf.Clamp(Stamina, 0, 20f);
+        GainStamina(0.01f);
+    }
+    public void GainStamina(float amount)
+    {
+        barManager.GainStamina(amount);
+    }
+    public void SpendStamina(float cost)
+    {
+        barManager.SpendStamina(cost);
     }
     public IEnumerator changeSprite(float delay)
     {
@@ -74,6 +85,7 @@ public class Attack : MonoBehaviour
                 {
                     if (Stamina > 5f)
                     {
+                        SpendStamina(5f);
                         Stamina -= 5f;
                         StartCoroutine(changeSprite(0.5f));
                         Vector2 knockBackDirection = (enemy.transform.position - transform.position).normalized;
@@ -98,6 +110,7 @@ public class Attack : MonoBehaviour
             {
                 if (Stamina > 5f)
                 {
+                    SpendStamina(5f);
                     Stamina -= 5f;
                     enemyScript.ApplyPoison(PoisonDamage);
                 }
@@ -107,6 +120,7 @@ public class Attack : MonoBehaviour
 
     private IEnumerator Dash()
     {
+        SpendStamina(5f);
         Stamina -= 5f;
         isdashing = true;
         canDash = false;

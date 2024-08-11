@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -200,6 +199,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 818596211}
   healthAmount: 100
+  energyBar: {fileID: 1914411407}
+  energyAmount: 20
 --- !u!1 &53765793
 GameObject:
   m_ObjectHideFlags: 0
@@ -5708,6 +5709,8 @@ MonoBehaviour:
   dashCooldown: 2
   canDash: 1
   dashKey: 32
+  barManager: {fileID: 0}
+  barManagerGO: {fileID: 52792880}
   attackOffset: {x: 1, y: 0}
 --- !u!4 &1560061845 stripped
 Transform:
