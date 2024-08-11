@@ -107,6 +107,7 @@ public class Attack : MonoBehaviour
 
     private IEnumerator Dash()
     {
+        Stamina -= 5f;
         isdashing = true;
         canDash = false;
         Color color = spriteRenderer.color;
