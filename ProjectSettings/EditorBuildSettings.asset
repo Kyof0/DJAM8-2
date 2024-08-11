@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/UI/Assets (1)/Assets/Scenes/angryteeth.unity
     guid: b194b8771e6a9304b91fb0aff9a70d55
-  - enabled: 1
+  - enabled: 0
     path: Assets/UI/Assets (1)/Assets/Scenes/entrance.unity
     guid: a55a107288720234eae741bc6d8b67b3
   - enabled: 1
@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/UI/Assets (1)/Assets/Scenes/SampleScene.unity
     guid: 590f41c173325054f8ac0aea00912641
+  - enabled: 1
+    path: Assets/UI/Assets (1)/Assets/Scenes/entrance.unity
+    guid: aca0cfa65f80bea469a381e56a6372ae
   m_configObjects: {}
