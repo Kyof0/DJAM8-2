@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
     public GameObject targetGO;
     public Transform gO;
     public int speed = 5;
-    public GameObject Volunerarpoint;
+    public GameObject vulnerablePoint;
     public float distance;
     public float whichSide;
 
@@ -118,7 +118,11 @@ public class Enemy : MonoBehaviour
             {
                 if (attackReady)
                 {
-                    StartCoroutine(VulnerableDuration(2f));
+                    int dice = Random.Range(1, 10);
+                    if (dice > 7)
+                    {
+                        StartCoroutine(VulnerableDuration(2f));
+                    }
                     anim.SetTrigger("Attacking");
                     attackReady = false;
                     hp.TakeDamage(damage);
@@ -135,9 +139,9 @@ public class Enemy : MonoBehaviour
     }
     public IEnumerator VulnerableDuration(float delay)
     {
-        Volunerarpoint.SetActive(true);
+        vulnerablePoint.SetActive(true);
         yield return new WaitForSeconds(delay);
-        Volunerarpoint.SetActive(false);
+        vulnerablePoint.SetActive(false);
     }
     public IEnumerator AttackCooldown(float delay)
     {

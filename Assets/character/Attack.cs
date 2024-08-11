@@ -13,6 +13,8 @@ public class Attack : MonoBehaviour
     public KeyCode poisonKey = KeyCode.E; // Key for poison attack
     public KeyCode knockDownKey = KeyCode.F; // Key for knock-down attack
 
+    public GameObject vulnerablePoint;
+
     public SpriteRenderer spriteRenderer;
     public Sprite sprite;
     public Sprite mainSprite;
@@ -47,9 +49,13 @@ public class Attack : MonoBehaviour
             EnemyHealth enemyScript = enemy.GetComponent<EnemyHealth>();
             if (enemyScript != null)
             {
-                StartCoroutine(changeSprite(0.5f));
-                Vector2 knockBackDirection = (enemy.transform.position - transform.position).normalized;
-                enemyScript.TakeDamage(attackDamage, knockBackDirection * knockBackForce);
+                if (vulnerablePoint.activeInHierarchy)
+                {
+                    StartCoroutine(changeSprite(0.5f));
+                    Vector2 knockBackDirection = (enemy.transform.position - transform.position).normalized;
+                    enemyScript.TakeDamage(attackDamage, knockBackDirection * knockBackForce);
+                    vulnerablePoint.SetActive(false);
+                }
             }
         }
     }
