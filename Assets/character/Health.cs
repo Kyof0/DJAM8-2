@@ -7,10 +7,14 @@ public class Health : MonoBehaviour
     public int maxHealth = 10;
     public int currentHealth;
 
+    public GameObject barManagerGO;
+    barManager barManager;
+
     public SpriteRenderer sr;
     
     void Start()
     {
+        barManager = barManagerGO.GetComponent<barManager>();
         currentHealth = maxHealth;
         sr = GetComponent<SpriteRenderer>();
     }
@@ -25,6 +29,7 @@ public class Health : MonoBehaviour
     {
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        barManager.TakeDamage(damage);
         StartCoroutine(goRed(0.6f));
         if (currentHealth <= 0)
         {
@@ -38,6 +43,7 @@ public class Health : MonoBehaviour
     }
     public void Heal(int amount)
     {
+        barManager.Heal(amount);
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
     }
