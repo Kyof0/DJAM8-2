@@ -5540,6 +5540,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 952171393}
     - target: {fileID: 5666553798265133053, guid: 17e0f68ae2f619d41b1628ceb2d8c22c, type: 3}
+      propertyPath: attackDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5666553798265133053, guid: 17e0f68ae2f619d41b1628ceb2d8c22c, type: 3}
+      propertyPath: healingDuration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5666553798265133053, guid: 17e0f68ae2f619d41b1628ceb2d8c22c, type: 3}
       propertyPath: projectilePrefab
       value: 
       objectReference: {fileID: 2961248810644871600, guid: 0769acb06159f814db319443bb53159b, type: 3}

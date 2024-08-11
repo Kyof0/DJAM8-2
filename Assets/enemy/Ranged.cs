@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Enemy;
 
 public class RangedEnemy : MonoBehaviour
 {
@@ -9,6 +10,11 @@ public class RangedEnemy : MonoBehaviour
         Attacking,
         Healing
     }
+    public bool isAble = true;
+    public int healingDuration;
+    public int attackDuration;
+
+    public bossState currentState;
     public float attackRange = 10f;
     public float attackCooldown = 2f;
     public int damage = 10;
@@ -31,35 +37,75 @@ public class RangedEnemy : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        currentState = bossState.Attacking;
     }
 
     private void Update()
     {
+        HandleState(currentState);
+        
+    }
+    public void HandleState(bossState state)
+    {
+        switch (state)
+        {
+            case bossState.Healing:
+                Healing();
+                break;
+
+            case bossState.Attacking:
+                Attacking();
+                break;
+        }
+    }
+    public void Healing()
+    {
+        if (isAble)
+        {
+            isAble = false;
+            StartCoroutine(WaitFor(healingDuration));
+        }
         if (IsAllyInRange() && canHeal)
-            {
-                HealAlly();
-            }
-        else if(!canHeal)
+        {
+            HealAlly();
+        }
+        else if (!canHeal)
         {
             Debug.Log("cant heal");
         }
-        if (player != null)
+    }
+    public void Attacking()
+    {
+        if (isAble) { 
+            isAble = false;
+            StartCoroutine(WaitFor(attackDuration));
+        }
+        if (IsPlayerInRange())
         {
-            
-            if (IsPlayerInRange())
+            if (canAttack)
             {
-                if (canAttack)
-                {
-                    AttackPlayer();
-                }
-            }
-            else
-            {
-                MoveTowardsPlayer();
+                AttackPlayer();
             }
         }
+        else
+        {
+            MoveTowardsPlayer();
+        }
     }
-
+    public IEnumerator WaitFor(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (currentState == bossState.Attacking)
+        {
+            currentState = bossState.Healing;
+            isAble = true;
+        }
+        else
+        {
+            currentState = bossState.Attacking;
+            isAble = true;
+        }
+    }
     private bool IsPlayerInRange()
     {
         return Vector2.Distance(transform.position, player.position) <= attackRange;
