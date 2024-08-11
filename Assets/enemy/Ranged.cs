@@ -12,7 +12,7 @@ public class RangedEnemy : MonoBehaviour
     public GameObject projectilePrefab;
     public Transform firePoint;
     public LayerMask playerLayer;
-
+    public Animator ani;
     private Transform player;
     private bool canAttack = true;
 
@@ -53,6 +53,13 @@ public class RangedEnemy : MonoBehaviour
 
     private void ShootProjectile()
     {
+        ani.SetTrigger("attack");
+        StartCoroutine(animationtilshoot());
+        
+    }
+    private IEnumerator animationtilshoot()
+    {
+        yield return new WaitForSeconds(0.8f); 
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
         Projectile projScript = projectile.GetComponent<Projectile>();
         if (projScript != null)
@@ -61,7 +68,6 @@ public class RangedEnemy : MonoBehaviour
             projScript.SetTarget(player);
         }
     }
-
     private IEnumerator AttackCooldown(float delay)
     {
         yield return new WaitForSeconds(delay);
