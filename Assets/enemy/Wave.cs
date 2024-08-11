@@ -3,18 +3,18 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    public int numberOfNewEnemies = 3; // Number of enemies to spawn
-    private bool hasSpawned = false; // Flag to ensure enemies are only spawned once per wave
+    public int numberOfNewEnemies = 3; // Number of enemies to spawn per wave
+    private int wavesSpawned = 0; // Counter to keep track of the number of waves spawned
+    public int maxWaves = 3; // Maximum number of waves (initial + 2 extra)
     public List<GameObject> wave_enemies; // List of enemies for the wave
 
     void Update()
     {
-        if (!hasSpawned && IsOnlyOneEnemyLeft())
+        if (wavesSpawned < maxWaves && IsOnlyOneEnemyLeft())
         {
             SpawnEnemies();
-            hasSpawned = true; // Mark the wave as spawned
+            wavesSpawned++; // Increment the wave counter
         }
-        
     }
 
     private bool IsOnlyOneEnemyLeft()
@@ -31,15 +31,32 @@ public class EnemyManager : MonoBehaviour
                 activeEnemyCount++;
             }
         }
-        // Check if there is exactly one active enemy left
+        // Check if there are no active enemies left
         return activeEnemyCount == 0;
     }
 
     private void SpawnEnemies()
     {
-        foreach (GameObject enemy in wave_enemies)
+        int enemiesActivated = 0; // Counter to track how many enemies have been activated
+
+        for (int i = 0; i < wave_enemies.Count; i++)
         {
-            enemy.SetActive(true); // Activate the enemy
+            if (wave_enemies[i] == null) // Skip if the enemy has been destroyed
+            {
+                continue;
+            }
+
+            if (!wave_enemies[i].activeInHierarchy) // Only activate inactive enemies
+            {
+                wave_enemies[i].SetActive(true);
+                enemiesActivated++;
+
+                // If the required number of enemies have been activated, break out of the loop
+                if (enemiesActivated >= numberOfNewEnemies)
+                {
+                    break;
+                }
+            }
         }
     }
 }
