@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class RangedEnemy : MonoBehaviour
 {
+    public enum bossState
+    {
+        Attacking,
+        Healing
+    }
     public float attackRange = 10f;
     public float attackCooldown = 2f;
     public int damage = 10;
