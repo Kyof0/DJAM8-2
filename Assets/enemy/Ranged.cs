@@ -123,6 +123,8 @@ public class RangedEnemy : MonoBehaviour
             EnemyHealth allyHealth = ally.GetComponent<EnemyHealth>();
             if (allyHealth != null && allyHealth.currentHealth < allyHealth.maxHealth)
             {
+
+                gameObject.transform.GetChild(0).gameObject.SetActive(true);
                 Debug.Log("heal complete");
                 allyHealth.currentHealth += healAmount;
                 allyHealth.currentHealth = Mathf.Clamp(allyHealth.currentHealth, 0, allyHealth.maxHealth);
