@@ -11,8 +11,13 @@ public class EnemyHealth : MonoBehaviour
     private Rigidbody2D rb;
     public float knockBackForce = 5f;
     public Attack attack;
-
+    public GameObject vulnerablePoint;
     public Animator animator;
+
+    public GameObject targetGO;
+
+    public float whichSide;
+    
 
     public bool isKnocked() {
         return isKnockedDown;
@@ -22,6 +27,11 @@ public class EnemyHealth : MonoBehaviour
         currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+    }
+    private void Update()
+    {
+        whichSide = vulnerablePoint.transform.position.x - targetGO.transform.position.x;
+        whichSide = Mathf.Clamp(whichSide, -1, 1);
     }
     public void TakeDamage(int damage, Vector2 knockBackDirection)
     {
@@ -40,6 +50,14 @@ public class EnemyHealth : MonoBehaviour
     }
     private IEnumerator KnockDown(Vector2 direction)
     {
+        rb.AddForce(Vector2.up * knockBackForce, ForceMode2D.Impulse);
+        if (whichSide > 0)
+        {
+            rb.AddForce(Vector2.right * knockBackForce, ForceMode2D.Impulse);
+        }
+        else if (whichSide < 0) {
+            rb.AddForce(Vector2.left * knockBackForce, ForceMode2D.Impulse);
+        }
         animator.SetBool("isMoving", false);
         animator.SetBool("isStunned", true);
         isKnockedDown = true;
@@ -51,6 +69,7 @@ public class EnemyHealth : MonoBehaviour
         }
         animator.SetBool("isMoving", true);
         animator.SetBool("isStunned", false);
+        vulnerablePoint.SetActive(false);
     }
     public void ApplyPoison(int poisonDamage)
     {
