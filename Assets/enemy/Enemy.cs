@@ -8,6 +8,9 @@ public class Enemy : MonoBehaviour
 {
     public EnemyHealth enemyHealth;
 
+    public Animator anim;
+    public SpriteRenderer SpriteRenderer;
+
     public int damage = 1;
     public float attackCooldown = 1.2f;
     public bool attackReady = true;
@@ -20,6 +23,7 @@ public class Enemy : MonoBehaviour
     public int speed = 5;
 
     public float distance;
+    public float whichSide;
 
     public LayerMask enemyLayers;
     public float attackRange = 1.5f;
@@ -33,11 +37,22 @@ public class Enemy : MonoBehaviour
         currentState = EnemyState.Idle;
         enemyHealth = GetComponent<EnemyHealth>();
         gO = GetComponent<Transform>();
+        anim = GetComponent<Animator>();
+        SpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update() {
         distance = Vector2.Distance(targetGO.transform.position, gO.position);
+        whichSide = gO.position.x - targetGO.transform.position.x;
+        whichSide = Mathf.Clamp(whichSide, -1, 1);
+        if (whichSide > 0 ) {
+            SpriteRenderer.flipX = false;
+        }
+        else if (whichSide< 0 )
+        {
+            SpriteRenderer.flipX = true;
+        }
         if (Mathf.Abs(distance) < 1.5f){
             isAttacking = true;
         }
@@ -45,7 +60,6 @@ public class Enemy : MonoBehaviour
         {
             isAttacking = false;
         }
-        Debug.Log($"{Vector2.Distance(targetGO.transform.position, gO.position)}");
         if (!enemyHealth.isKnocked()) {
             HandleState(currentState);
         }
@@ -63,13 +77,15 @@ public class Enemy : MonoBehaviour
     }
     public void Idle() {
         if (isAble) {
+            anim.SetBool("isMoving", true);
             StartCoroutine(WaitFor(IdleDuration));
             isAble = false;
         }
+        gO.position = Vector2.MoveTowards(transform.position, new Vector2(-targetGO.transform.position.x, transform.position.y), speed * Time.deltaTime);
     }
     public void Attacking() {
         if (!isAttacking) {
-            transform.position = Vector2.MoveTowards(transform.position, targetGO.transform.position, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), targetGO.transform.position, speed * Time.deltaTime);
         }
         Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(transform.position , 1f, enemyLayers);
         foreach (Collider2D player in hitPlayer) {
@@ -77,6 +93,7 @@ public class Enemy : MonoBehaviour
             if (hp != null)
             {
                 if (attackReady) {
+                    anim.SetTrigger("Attacking");
                     attackReady = false;
                     hp.TakeDamage(damage);
                     StartCoroutine(AttackCooldown(attackCooldown));

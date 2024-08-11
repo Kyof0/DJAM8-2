@@ -12,7 +12,7 @@ public class EnemyHealth : MonoBehaviour
     public float knockBackForce = 5f;
     public Attack attack;
 
-
+    public Animator animator;
 
     public bool isKnocked() {
         return isKnockedDown;
@@ -21,13 +21,13 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
-
     public void TakeDamage(int damage, Vector2 knockBackDirection)
     {
-        if (isKnockedDown)
+        if (isKnockedDown){
             return;
-
+        }
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
@@ -38,9 +38,10 @@ public class EnemyHealth : MonoBehaviour
             StartCoroutine(KnockDown(knockBackDirection));
         }
     }
-
     private IEnumerator KnockDown(Vector2 direction)
     {
+        animator.SetBool("isMoving", false);
+        animator.SetBool("isStunned", true);
         isKnockedDown = true;
         yield return new WaitForSeconds(knockDownDuration);
 
@@ -48,16 +49,14 @@ public class EnemyHealth : MonoBehaviour
         {
             isKnockedDown = false;
         }
-
+        animator.SetBool("isMoving", true);
+        animator.SetBool("isStunned", false);
     }
-
     public void ApplyPoison(int poisonDamage)
     {
         if (!isKnockedDown || isPoisoned)
             return;
-
         isPoisoned = true;
-
         StartCoroutine(PoisonEffect(poisonDamage));
     }
 

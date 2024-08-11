@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Attack : MonoBehaviour
@@ -11,6 +12,10 @@ public class Attack : MonoBehaviour
     public int PoisonDamage = 10;
     public KeyCode poisonKey = KeyCode.E; // Key for poison attack
     public KeyCode knockDownKey = KeyCode.F; // Key for knock-down attack
+
+    public SpriteRenderer spriteRenderer;
+    public Sprite sprite;
+    public Sprite mainSprite;
 
     // Position offset for attack area
     public Vector2 attackOffset = new Vector2(1f, 0f);
@@ -26,6 +31,10 @@ public class Attack : MonoBehaviour
             PerformPoisonAttack();
         }
     }
+    void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     void PerformKnockDownAttack()
     {
@@ -38,12 +47,17 @@ public class Attack : MonoBehaviour
             EnemyHealth enemyScript = enemy.GetComponent<EnemyHealth>();
             if (enemyScript != null)
             {
+                StartCoroutine(changeSprite(0.5f));
                 Vector2 knockBackDirection = (enemy.transform.position - transform.position).normalized;
                 enemyScript.TakeDamage(attackDamage, knockBackDirection * knockBackForce);
             }
         }
     }
-
+    public IEnumerator changeSprite(float delay){
+        spriteRenderer.sprite = sprite;
+        yield return new WaitForSeconds(delay);
+        spriteRenderer.sprite = mainSprite;
+    }
     void PerformPoisonAttack()
     {
         Debug.Log("Poison attack!");

@@ -25,7 +25,7 @@ public class Health : MonoBehaviour
     {
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        StartCoroutine(goRed(2f));
+        StartCoroutine(goRed(0.6f));
         if (currentHealth <= 0)
         {
             Die();
