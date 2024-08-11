@@ -33,17 +33,14 @@ public class RangedEnemy : MonoBehaviour
     private Transform player;
     private bool canAttack = true;
     private bool canHeal = true;
-
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         currentState = bossState.Attacking;
     }
-
     private void Update()
     {
         HandleState(currentState);
-        
     }
     public void HandleState(bossState state)
     {
@@ -176,6 +173,9 @@ public class RangedEnemy : MonoBehaviour
     private void MoveTowardsPlayer()
     {
         Vector2 direction = (player.position - transform.position).normalized;
-        transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+        Vector3 newPosition = Vector3.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+        newPosition.z = transform.position.z;
+
+        transform.position = newPosition;
     }
 }
