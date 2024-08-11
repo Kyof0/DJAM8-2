@@ -118,7 +118,7 @@ public class Enemy : MonoBehaviour
             {
                 if (attackReady)
                 {
-                    Volunerarpoint.SetActive(true);
+                    StartCoroutine(VulnerableDuration(2f));
                     anim.SetTrigger("Attacking");
                     attackReady = false;
                     hp.TakeDamage(damage);
@@ -133,13 +133,18 @@ public class Enemy : MonoBehaviour
             isAble = false;
         }
     }
-
+    public IEnumerator VulnerableDuration(float delay)
+    {
+        Volunerarpoint.SetActive(true);
+        yield return new WaitForSeconds(delay);
+        Volunerarpoint.SetActive(false);
+    }
     public IEnumerator AttackCooldown(float delay)
     {
         Debug.Log("Attacking");
         yield return new WaitForSeconds(delay);
         attackReady = true;
-        Volunerarpoint.SetActive(false);
+        
     }
 
     public IEnumerator WaitFor(float delay)
