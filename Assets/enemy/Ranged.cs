@@ -15,6 +15,7 @@ public class RangedEnemy : MonoBehaviour
     public int attackDuration;
 
     public bossState currentState;
+
     public float attackRange = 10f;
     public float attackCooldown = 2f;
     public int damage = 10;
@@ -29,12 +30,15 @@ public class RangedEnemy : MonoBehaviour
     public LayerMask playerLayer;
     public LayerMask allyLayer; // Layer for allies
 
+    public Rigidbody2D rb;
+
     public Animator ani;
     private Transform player;
     private bool canAttack = true;
     private bool canHeal = true;
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         currentState = bossState.Attacking;
     }
@@ -59,11 +63,13 @@ public class RangedEnemy : MonoBehaviour
     {
         if (isAble)
         {
+            rb.gravityScale = 0;
             isAble = false;
             StartCoroutine(WaitFor(healingDuration));
         }
         if (IsAllyInRange() && canHeal)
         {
+            
             HealAlly();
         }
         else if (!canHeal)
@@ -99,6 +105,7 @@ public class RangedEnemy : MonoBehaviour
         }
         else
         {
+            rb.gravityScale = 1;
             currentState = bossState.Attacking;
             isAble = true;
         }
@@ -116,7 +123,6 @@ public class RangedEnemy : MonoBehaviour
 
     private void HealAlly()
     {
-
         Collider2D[] alliesInRange = Physics2D.OverlapCircleAll(transform.position, healRange, allyLayer);
         foreach (Collider2D ally in alliesInRange)
         {
@@ -134,7 +140,6 @@ public class RangedEnemy : MonoBehaviour
             }
         }
     }
-
     private void AttackPlayer()
     {
         canAttack = false;

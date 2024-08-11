@@ -38,6 +38,11 @@ public class EnemyHealth : MonoBehaviour
         whichSide = Mathf.Clamp(whichSide, -1, 1);
         
     }
+    public void Heal(int amount)
+    {
+        currentHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, 100);
+    }
     public void TakeDamage(int damage, Vector2 knockBackDirection)
     {
         if (isKnockedDown){
