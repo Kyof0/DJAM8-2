@@ -9,7 +9,6 @@ public class Enemy : MonoBehaviour
     public EnemyHealth enemyHealth;
     public Animator anim;
     public SpriteRenderer SpriteRenderer;
-
     public int damage = 1;
     public float attackCooldown = 1.2f;
     public bool attackReady = true;
@@ -114,8 +113,9 @@ public class Enemy : MonoBehaviour
         Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(transform.position, 1f, enemyLayers);
         foreach (Collider2D player in hitPlayer)
         {
+            Attack playerattack = player.GetComponent<Attack>();
             Health hp = player.GetComponent<Health>();
-            if (hp != null)
+            if (hp != null && !playerattack.isdashing)
             {
                 if (attackReady)
                 {

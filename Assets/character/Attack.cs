@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Attack : MonoBehaviour
@@ -20,9 +18,21 @@ public class Attack : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public Sprite sprite;
     public Sprite mainSprite;
+    public bool isdashing;
+    // Dash variables
+    public float dashDistance = 5f;
+    public float dashSpeed = 10f;
+    public float dashCooldown = 2f;
+    public bool canDash = true;
+    public KeyCode dashKey = KeyCode.Space; // Key for dashing
 
     // Position offset for attack area
     public Vector2 attackOffset = new Vector2(1f, 0f);
+
+    void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     void Update()
     {
@@ -34,14 +44,21 @@ public class Attack : MonoBehaviour
         {
             PerformPoisonAttack();
         }
+
+        if (Input.GetKeyDown(dashKey) && canDash && Stamina > 5)
+        {
+            StartCoroutine(Dash());
+        }
+
         Stamina += 0.01f;
         Stamina = Mathf.Clamp(Stamina, 0, 20f);
     }
-    void Start()
+    public IEnumerator changeSprite(float delay)
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = sprite;
+        yield return new WaitForSeconds(delay);
+        spriteRenderer.sprite = mainSprite;
     }
-
     void PerformKnockDownAttack()
     {
         Debug.Log("Knockdown attack!");
@@ -55,7 +72,7 @@ public class Attack : MonoBehaviour
             {
                 if (enemy.transform.GetChild(0).gameObject.activeSelf)
                 {
-                    if (Stamina > 0f)
+                    if (Stamina > 5f)
                     {
                         Stamina -= 5f;
                         StartCoroutine(changeSprite(0.5f));
@@ -67,11 +84,7 @@ public class Attack : MonoBehaviour
             }
         }
     }
-    public IEnumerator changeSprite(float delay){
-        spriteRenderer.sprite = sprite;
-        yield return new WaitForSeconds(delay);
-        spriteRenderer.sprite = mainSprite;
-    }
+
     void PerformPoisonAttack()
     {
         Debug.Log("Poison attack!");
@@ -83,12 +96,38 @@ public class Attack : MonoBehaviour
             EnemyHealth enemyScript = enemy.GetComponent<EnemyHealth>();
             if (enemyScript != null)
             {
-                if (Stamina > 0f)
+                if (Stamina > 5f)
                 {
                     Stamina -= 5f;
                     enemyScript.ApplyPoison(PoisonDamage);
                 }
             }
         }
+    }
+
+    private IEnumerator Dash()
+    {
+        isdashing = true;
+        canDash = false;
+        Color color = spriteRenderer.color;
+        color.a = 0.5f; // 50% transparent
+        spriteRenderer.color = color;
+
+        float dashTime = dashDistance / dashSpeed;
+        Vector2 dashDirection = transform.right; // Dash in the direction the player is facing
+
+        // Perform the dash
+        for (float t = 0; t < dashTime; t += Time.deltaTime)
+        {
+            transform.Translate(dashDirection * dashSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        // Reset transparency
+        color.a = 1f; // Fully opaque
+        spriteRenderer.color = color;
+        isdashing = false;
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
     }
 }
