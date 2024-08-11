@@ -14,7 +14,7 @@ public class EnemyHealth : MonoBehaviour
     public GameObject vulnerablePoint;
     public Animator animator;
     public SpriteRenderer sr;
-
+    private Health health;
     public GameObject targetGO;
 
     public float whichSide;
@@ -90,6 +90,7 @@ public class EnemyHealth : MonoBehaviour
         while (Time.time < poisonEndTime)
         {
             currentHealth -= poisonDamage;
+            health.currentHealth += poisonDamage / 10;
             if (currentHealth <= 0)
             {
                 Die();
