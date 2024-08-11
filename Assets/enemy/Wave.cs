@@ -1,37 +1,45 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    public GameObject enemyPrefab; // Reference to the enemy prefab
-    public Transform[] spawnPoints; // Array of spawn points for new enemies
     public int numberOfNewEnemies = 3; // Number of enemies to spawn
-    private bool hasSpawned = false; // Flag to ensure enemies are only spawned once
+    private bool hasSpawned = false; // Flag to ensure enemies are only spawned once per wave
+    public List<GameObject> wave_enemies; // List of enemies for the wave
 
     void Update()
     {
         if (!hasSpawned && IsOnlyOneEnemyLeft())
         {
             SpawnEnemies();
-            hasSpawned = true;
+            hasSpawned = true; // Mark the wave as spawned
         }
+        
     }
 
     private bool IsOnlyOneEnemyLeft()
     {
-        // Find all objects of type Enemy in the scene
-        Enemy[] enemies = FindObjectsOfType<Enemy>();
-        // Check if there is exactly one enemy left
-        return enemies.Length == 1;
+        // Find all objects of type Enemy in the scene, including inactive ones
+        Enemy[] enemies = FindObjectsOfType<Enemy>(true);
+
+        // Count only active enemies
+        int activeEnemyCount = 0;
+        foreach (Enemy enemy in enemies)
+        {
+            if (enemy.gameObject.activeInHierarchy)
+            {
+                activeEnemyCount++;
+            }
+        }
+        // Check if there is exactly one active enemy left
+        return activeEnemyCount == 0;
     }
 
     private void SpawnEnemies()
     {
-        for (int i = 0; i < numberOfNewEnemies; i++)
+        foreach (GameObject enemy in wave_enemies)
         {
-            // Choose a random spawn point
-            Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            // Instantiate a new enemy at the chosen spawn point
-            Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+            enemy.SetActive(true); // Activate the enemy
         }
     }
 }
