@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Attack : MonoBehaviour
@@ -49,12 +51,12 @@ public class Attack : MonoBehaviour
             EnemyHealth enemyScript = enemy.GetComponent<EnemyHealth>();
             if (enemyScript != null)
             {
-                if (vulnerablePoint.activeInHierarchy)
+                if (enemy.transform.GetChild(0).gameObject.activeSelf)
                 {
                     StartCoroutine(changeSprite(0.5f));
                     Vector2 knockBackDirection = (enemy.transform.position - transform.position).normalized;
                     enemyScript.TakeDamage(attackDamage, knockBackDirection * knockBackForce);
-                    vulnerablePoint.SetActive(false);
+                    enemy.transform.GetChild(0).gameObject.SetActive(false);
                 }
             }
         }

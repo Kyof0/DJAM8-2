@@ -40,6 +40,7 @@ public class Enemy : MonoBehaviour
         gO = GetComponent<Transform>();
         anim = GetComponent<Animator>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
+        vulnerablePoint = transform.GetChild(0).gameObject;
     }
 
     void Update()

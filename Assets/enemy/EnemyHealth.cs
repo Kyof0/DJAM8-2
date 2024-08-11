@@ -29,6 +29,7 @@ public class EnemyHealth : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        vulnerablePoint = transform.GetChild(0).gameObject;
     }
     private void Update()
     {
