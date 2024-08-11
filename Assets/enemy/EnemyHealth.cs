@@ -14,7 +14,7 @@ public class EnemyHealth : MonoBehaviour
     public GameObject vulnerablePoint;
     public Animator animator;
     public SpriteRenderer sr;
-    private Health health;
+    public Health health;
     public GameObject targetGO;
 
     public float whichSide;
@@ -25,6 +25,7 @@ public class EnemyHealth : MonoBehaviour
     }
     void Start()
     {
+        health = targetGO.GetComponent<Health>();
         currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -90,7 +91,8 @@ public class EnemyHealth : MonoBehaviour
         while (Time.time < poisonEndTime)
         {
             currentHealth -= poisonDamage;
-            health.currentHealth += poisonDamage / 10;
+            health.Heal(poisonDamage / 3);
+
             if (currentHealth <= 0)
             {
                 Die();

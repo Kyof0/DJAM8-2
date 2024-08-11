@@ -95,7 +95,7 @@ public class Enemy : MonoBehaviour
         }
 
         Vector3 newPosition = Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y),
-            new Vector2(-targetGO.transform.position.x, transform.position.y), speed * Time.deltaTime);
+        new Vector2(-targetGO.transform.position.x, transform.position.y), speed * Time.deltaTime);
         newPosition.z = transform.position.z;  // Maintain the current z position
         transform.position = newPosition;
     }
