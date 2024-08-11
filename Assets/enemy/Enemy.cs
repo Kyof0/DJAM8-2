@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
     public GameObject targetGO;
     public Transform gO;
     public int speed = 5;
-
+    public GameObject Volunerarpoint;
     public float distance;
     public float whichSide;
 
@@ -118,6 +118,7 @@ public class Enemy : MonoBehaviour
             {
                 if (attackReady)
                 {
+                    Volunerarpoint.SetActive(true);
                     anim.SetTrigger("Attacking");
                     attackReady = false;
                     hp.TakeDamage(damage);
@@ -138,6 +139,7 @@ public class Enemy : MonoBehaviour
         Debug.Log("Attacking");
         yield return new WaitForSeconds(delay);
         attackReady = true;
+        Volunerarpoint.SetActive(false);
     }
 
     public IEnumerator WaitFor(float delay)
