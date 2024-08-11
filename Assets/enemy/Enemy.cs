@@ -119,8 +119,8 @@ public class Enemy : MonoBehaviour
             {
                 if (attackReady)
                 {
-                    int dice = Random.Range(1, 10);
-                    if (dice > 7)
+                    int dice = Random.Range(1, 20);
+                    if (dice > 13)
                     {
                         StartCoroutine(VulnerableDuration(2f));
                     }
