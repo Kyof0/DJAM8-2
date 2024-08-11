@@ -8,4 +8,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/UI/Assets (1)/Assets/Scenes/angryteeth.unity
+    guid: b194b8771e6a9304b91fb0aff9a70d55
+  - enabled: 1
+    path: Assets/UI/Assets (1)/Assets/Scenes/entrance.unity
+    guid: a55a107288720234eae741bc6d8b67b3
+  - enabled: 1
+    path: Assets/UI/Assets (1)/Assets/Scenes/options.unity
+    guid: bbcd4c796fbcdf54ca5212c6cecb5d2f
+  - enabled: 1
+    path: Assets/UI/Assets (1)/Assets/Scenes/s.unity
+    guid: 61dfe1324e5007149a95198d952072ea
+  - enabled: 1
+    path: Assets/UI/Assets (1)/Assets/Scenes/SampleScene.unity
+    guid: 590f41c173325054f8ac0aea00912641
   m_configObjects: {}
