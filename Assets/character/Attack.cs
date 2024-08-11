@@ -12,7 +12,7 @@ public class Attack : MonoBehaviour
     public int PoisonDamage = 10;
     public KeyCode poisonKey = KeyCode.E; // Key for poison attack
     public KeyCode knockDownKey = KeyCode.F; // Key for knock-down attack
-
+    private Vector2 dashDirection;
     public GameObject vulnerablePoint;
     public float Stamina = 20f;
     public SpriteRenderer spriteRenderer;
@@ -115,7 +115,14 @@ public class Attack : MonoBehaviour
         spriteRenderer.color = color;
 
         float dashTime = dashDistance / dashSpeed;
-        Vector2 dashDirection = transform.right; // Dash in the direction the player is facing
+        if(transform.localScale.x == 1)
+        {
+           dashDirection = transform.right; // Dash in the direction the player is facing
+        }
+        else
+        {
+            dashDirection = transform.right * -1;
+        }
 
         // Perform the dash
         for (float t = 0; t < dashTime; t += Time.deltaTime)
