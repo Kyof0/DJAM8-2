@@ -30,7 +30,6 @@ public class RangedEnemy : MonoBehaviour
     public LayerMask playerLayer;
     public LayerMask allyLayer; // Layer for allies
 
-    public Rigidbody2D rb;
 
     public Animator ani;
     private Transform player;
@@ -38,7 +37,6 @@ public class RangedEnemy : MonoBehaviour
     private bool canHeal = true;
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         currentState = bossState.Attacking;
     }
@@ -63,7 +61,6 @@ public class RangedEnemy : MonoBehaviour
     {
         if (isAble)
         {
-            rb.gravityScale = 0;
             isAble = false;
             StartCoroutine(WaitFor(healingDuration));
         }
@@ -105,7 +102,6 @@ public class RangedEnemy : MonoBehaviour
         }
         else
         {
-            rb.gravityScale = 1;
             currentState = bossState.Attacking;
             isAble = true;
         }
