@@ -13,6 +13,7 @@ public class EnemyHealth : MonoBehaviour
     public Attack attack;
     public GameObject vulnerablePoint;
     public Animator animator;
+    public SpriteRenderer sr;
 
     public GameObject targetGO;
 
@@ -27,11 +28,13 @@ public class EnemyHealth : MonoBehaviour
         currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
     }
     private void Update()
     {
         whichSide = vulnerablePoint.transform.position.x - targetGO.transform.position.x;
         whichSide = Mathf.Clamp(whichSide, -1, 1);
+        
     }
     public void TakeDamage(int damage, Vector2 knockBackDirection)
     {
@@ -81,8 +84,8 @@ public class EnemyHealth : MonoBehaviour
 
     private IEnumerator PoisonEffect(int poisonDamage)
     {
+        sr.color = new Color(247 / 255f, 246 / 255f, 149 / 255f, 255 / 255f);
         float poisonEndTime = Time.time + poisonDuration;
-
         while (Time.time < poisonEndTime)
         {
             currentHealth -= poisonDamage;
@@ -95,6 +98,7 @@ public class EnemyHealth : MonoBehaviour
         }
         isKnockedDown = false;
         isPoisoned = false;
+        sr.color = new Color(1f, 1f, 1f, 1f);
     }
 
     private void Die()
