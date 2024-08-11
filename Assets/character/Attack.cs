@@ -16,7 +16,7 @@ public class Attack : MonoBehaviour
     public KeyCode knockDownKey = KeyCode.F; // Key for knock-down attack
 
     public GameObject vulnerablePoint;
-
+    public float Stamina = 20f;
     public SpriteRenderer spriteRenderer;
     public Sprite sprite;
     public Sprite mainSprite;
@@ -34,6 +34,8 @@ public class Attack : MonoBehaviour
         {
             PerformPoisonAttack();
         }
+        Stamina += 0.01f;
+        Stamina = Mathf.Clamp(Stamina, 0, 20f);
     }
     void Start()
     {
@@ -53,10 +55,14 @@ public class Attack : MonoBehaviour
             {
                 if (enemy.transform.GetChild(0).gameObject.activeSelf)
                 {
-                    StartCoroutine(changeSprite(0.5f));
-                    Vector2 knockBackDirection = (enemy.transform.position - transform.position).normalized;
-                    enemyScript.TakeDamage(attackDamage, knockBackDirection * knockBackForce);
-                    enemy.transform.GetChild(0).gameObject.SetActive(false);
+                    if (Stamina > 0f)
+                    {
+                        Stamina -= 5f;
+                        StartCoroutine(changeSprite(0.5f));
+                        Vector2 knockBackDirection = (enemy.transform.position - transform.position).normalized;
+                        enemyScript.TakeDamage(attackDamage, knockBackDirection * knockBackForce);
+                        enemy.transform.GetChild(0).gameObject.SetActive(false);
+                    }
                 }
             }
         }
@@ -77,7 +83,11 @@ public class Attack : MonoBehaviour
             EnemyHealth enemyScript = enemy.GetComponent<EnemyHealth>();
             if (enemyScript != null)
             {
-                enemyScript.ApplyPoison(PoisonDamage);
+                if (Stamina > 0f)
+                {
+                    Stamina -= 5f;
+                    enemyScript.ApplyPoison(PoisonDamage);
+                }
             }
         }
     }
