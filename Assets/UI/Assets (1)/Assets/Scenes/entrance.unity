@@ -527,12 +527,12 @@ MonoBehaviour:
   - name: theme
     clip: {fileID: 8300000, guid: af32f06f1c45a964bb485de85a669070, type: 3}
   - name: sad
-    clip: {fileID: 8300000, guid: c71ed5f57cf9f70439089af1b9e4d4ef, type: 3}
+    clip: {fileID: 8300000, guid: 1da72d7b996c23d448adbad92a0ce345, type: 3}
   - name: fight
-    clip: {fileID: 8300000, guid: 5b2de2a743a33c54b8639e60f2ee73fc, type: 3}
+    clip: {fileID: 8300000, guid: 4638d37277da1b5469b7753f9e8bf950, type: 3}
   sfxSounds:
   - name: click
-    clip: {fileID: 8300000, guid: 32d4b1811dda14a6cb9e059ee8ad17d2, type: 3}
+    clip: {fileID: 8300000, guid: 7a256d6611d0db445be3f725d3c1abe7, type: 3}
   - name: sword
     clip: {fileID: 8300000, guid: 3950732800a13ed4c96d8da3019b7ef4, type: 3}
   - name: brush
