@@ -9,20 +9,34 @@ public class SwitchSceneOnVideoEnd : MonoBehaviour
 
     void Start()
     {
-        // Ensure the VideoPlayer component is assigned
         if (videoPlayer == null)
         {
             videoPlayer = GetComponent<VideoPlayer>();
         }
 
-        // Subscribe to the video end event
         videoPlayer.loopPointReached += OnVideoEnd;
     }
 
-    // Method called when the video finishes playing
     void OnVideoEnd(VideoPlayer vp)
     {
         // Load the next scene
         SceneManager.LoadScene("SampleScene");
+        AudioManager.Instance.PlaySFX("sword");
+        AudioManager.Instance.PlayMusic("fight");
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            // Stop the video
+            videoPlayer.Pause();
+
+            // Optionally, you can add other actions here
+            SceneManager.LoadScene("SampleScene");
+            AudioManager.Instance.PlaySFX("click");
+            AudioManager.Instance.PlaySFX("sword");
+            AudioManager.Instance.PlayMusic("fight");
+        }
     }
 }

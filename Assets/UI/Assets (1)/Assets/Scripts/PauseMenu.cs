@@ -44,6 +44,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
+        AudioManager.Instance.PlaySFX("click");
     }
     
     public void GoToMainMenu()
@@ -51,6 +52,10 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("entrance");
         isPaused = false;
+        AudioManager.Instance.PlaySFX("click");
+        AudioManager.Instance.musicSource.Stop();
+        AudioManager.Instance.PlayMusic("theme");
     }
-    }
+
+}
 

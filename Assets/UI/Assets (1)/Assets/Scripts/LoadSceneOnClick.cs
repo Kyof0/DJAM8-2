@@ -10,6 +10,7 @@ public class LoadSceneOnClick : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             LoadScene();
+            AudioManager.Instance.PlaySFX("click");
         }
     }
 
